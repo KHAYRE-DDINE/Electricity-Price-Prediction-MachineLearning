@@ -1,103 +1,118 @@
 # Electricity Price Prediction using Machine Learning
 
 [![Python 3.x](https://img.shields.io/badge/Python-3.x-blue.svg)](https://www.python.org/)
+[![Jupyter Notebook](https://img.shields.io/badge/Jupyter-Notebook-orange.svg)](https://jupyter.org/)
+[![scikit-learn](https://img.shields.io/badge/scikit--learn-0.24.2-blue.svg)](https://scikit-learn.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Status: Active](https://img.shields.io/badge/Status-Active-brightgreen.svg)]()
 
 ## 📌 Overview
 
-This project implements a machine learning solution for predicting electricity prices in the next time interval (`P(t+1)`). It serves as a baseline model that replaces traditional fuzzy inference systems with a more straightforward machine learning approach using `scikit-learn`'s `LinearRegression`. The model leverages the two most influential features identified through correlation analysis: temperature with a 2-period lag (`T(t-2)`) and current electricity demand (`D(t)`).
+This project implements a machine learning solution for predicting electricity prices in the next time interval (`P(t+1)`) using a Jupyter notebook. The implementation uses `scikit-learn`'s `LinearRegression` model and includes comprehensive data exploration, visualization, and model evaluation. The model utilizes multiple time-lagged features including temperature and demand data to predict future electricity prices.
 
 ## 🎯 Key Features
 
-- **Simple yet effective** linear regression model for electricity price prediction
-- **Data preprocessing** with outlier removal using IQR (Interquartile Range)
-- **Performance evaluation** with standard regression metrics (MSE, R²)
-- **Visual analytics** with comparison plots
-- **Modular code structure** for easy extension and modification
+- **Comprehensive Data Analysis** with pandas for data manipulation and exploration
+- **Data Visualization** using matplotlib and seaborn for insights
+- **Data Preprocessing** with outlier removal using IQR (Interquartile Range)
+- **Feature Scaling** using StandardScaler for model performance
+- **Model Training** with scikit-learn's Linear Regression
+- **Performance Evaluation** with RMSE and R² metrics
+- **Interactive Visualization** of actual vs predicted values and correlation heatmaps
 
 ## 📂 Project Structure
 
 ```
 Electricity-Price-Prediction-MachineLearning/
-├── linear_regression_simple.py  # Main Python script for the prediction pipeline
-├── 2018_CI_Assignment_Training_Data.csv  # Training dataset
-├── 2018_CI_Assignment_Testing_Data.csv   # Testing dataset
-├── actual_vs_predicted.png      # Scatter plot visualization (generated)
-└── predictions_over_time.png    # Time series visualization (generated)
+├── electricity_price_prediction.ipynb  # Jupyter notebook with the complete analysis
+├── 2018_CI_Assignment_Training_Data.csv  # Training dataset (956 samples)
+├── 2018_CI_Assignment_Testing_Data.csv   # Testing dataset (506 samples)
+└── README.md                            # Project documentation
 ```
 
 ## 🛠️ Prerequisites
 
 - Python 3.6+
+- Jupyter Notebook
 - Required Python packages:
   - `pandas` - Data manipulation and analysis
   - `numpy` - Numerical operations
   - `scikit-learn` - Machine learning algorithms
   - `matplotlib` - Data visualization
+  - `seaborn` - Statistical data visualization
+  - `jupyter` - Interactive computing
 
-## 🚀 Quick Start
+## 🚀 Getting Started
 
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/KHAYRE-DDINE/Electricity-Price-Prediction-MachineLearning.git
-   cd Electricity-Price-Prediction-MachineLearning
-   ```
+1. Open the `electricity_price_prediction.ipynb` Jupyter Notebook
+2. Run all cells to execute the analysis
+3. View the results directly in the notebook
 
-2. **Install dependencies**
-   ```bash
-   pip install -r requirements.txt
-   ```
-   (If requirements.txt doesn't exist, install packages individually: `pip install pandas numpy scikit-learn matplotlib`)
+## 🎯 Project Workflow
 
-3. **Run the prediction model**
-   ```bash
-   python linear_regression_simple.py
-   ```
+The notebook follows a structured data science workflow:
 
-4. **View results**
-   - Model performance metrics will be displayed in the console
-   - Visualization plots will be displayed in pop-up windows
-   - Plots are also saved as PNG files in the project directory
+1. **Data Loading & Initial Exploration**
+   - Loads training and testing datasets
+   - Displays basic statistics and data structure
 
-## 🎯 Purpose & Methodology
+2. **Data Visualization**
+   - Price distribution analysis
+   - Correlation heatmap of all features
+   - Outlier detection and handling
 
-The primary goal of this project is to predict the next time interval's electricity price (`P(t+1)`) using historical data. The model is designed to be simple yet effective, serving as a baseline for more complex forecasting systems.
+3. **Data Preprocessing**
+   - Outlier removal using IQR method
+   - Feature scaling with StandardScaler
+   - Train-test split
 
-### Feature Engineering
+4. **Model Training**
+   - Linear Regression model implementation
+   - Training on preprocessed data
 
-Based on correlation analysis, we've identified the following features as most predictive:
+5. **Model Evaluation**
+   - Performance metrics (RMSE, R²)
+   - Visualization of predictions vs actual values
+   - Feature importance analysis
 
-- **Input Features**:
-  - `T(t-2)`: Temperature with a 2-period lag
-  - `D(t)`: Current electricity demand
+### Features Used
 
-- **Target Variable**:
-  - `P(t+1)`: Next time interval's electricity price (to be predicted)
+The model uses the following features for prediction:
+- Temperature at different time lags (T(t-2), T(t-1), T(t))
+- Demand at different time lags (D(t-2), D(t-1), D(t))
+- Target variable: Next time period's price (P(t+1))
 
-### Data Processing Pipeline
+## 📊 Model Performance
 
-1. **Data Loading**:
-   - Training and testing datasets are loaded from CSV files
-   - Data is converted to numerical arrays for processing
+The current model achieves the following performance metrics:
 
-2. **Outlier Removal**:
-   - Implements IQR (Interquartile Range) method to remove price outliers
-   - Ensures model robustness against extreme values
+| Metric  | Training Set | Test Set |
+|---------|-------------|----------|
+| RMSE    | 6.20        | 20.15    |
+| R²      | 0.3951      | 0.1242   |
 
-3. **Feature-Target Split**:
-   - Features (X): `[T(t-2), D(t)]`
-   - Target (y): `P(t+1)`
+### Key Findings
 
-## 🛠️ Model Architecture
+- The model shows moderate performance on the training set but struggles to generalize to the test set
+- The significant gap between training and test performance suggests potential overfitting
+- Feature importance analysis can help identify the most predictive features
 
-### Linear Regression Model
+## 🚀 Next Steps
 
-The project employs a simple yet powerful linear regression model from `scikit-learn`:
+1. **Model Improvement**
+   - Try more complex models (Random Forest, XGBoost, etc.)
+   - Feature engineering to capture more complex patterns
+   - Hyperparameter tuning
 
-- **Model Type**: `sklearn.linear_model.LinearRegression`
-- **Training**: Standard OLS (Ordinary Least Squares) fitting
-- **Advantages**:
+2. **Feature Engineering**
+   - Create additional time-based features
+   - Consider external factors affecting electricity prices
+   - Handle seasonality and trends
+
+3. **Deployment**
+   - Convert notebook to a deployable application
+   - Create an API endpoint for predictions
+   - Set up automated model retraining
   - Fast training and prediction
   - Easy to interpret coefficients
   - Low computational requirements
@@ -302,15 +317,9 @@ model = GradientBoostingRegressor(n_estimators=100, learning_rate=0.1, max_depth
    - Basic error handling
    - No API or web interface
 
-## 🤝 Contributing
+## 🤝 About
 
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+This project demonstrates a machine learning approach to electricity price prediction using Jupyter Notebook and scikit-learn.
 
 ## 📄 License
 
