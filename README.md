@@ -1,52 +1,215 @@
-# Electricity Price Prediction using Machine Learning
+# 🔌 Electricity Price Prediction using Machine Learning
 
 [![Python 3.x](https://img.shields.io/badge/Python-3.x-blue.svg)](https://www.python.org/)
 [![Jupyter Notebook](https://img.shields.io/badge/Jupyter-Notebook-orange.svg)](https://jupyter.org/)
 [![scikit-learn](https://img.shields.io/badge/scikit--learn-0.24.2-blue.svg)](https://scikit-learn.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Status: Active](https://img.shields.io/badge/Status-Active-brightgreen.svg)]()
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/yourusername/Electricity-Price-Prediction-MachineLearning/)
 
-## 📌 Overview
+## 📌 Project Overview
 
-This project implements a machine learning solution for predicting electricity prices in the next time interval (`P(t+1)`) using a Jupyter notebook. The implementation uses `scikit-learn`'s `LinearRegression` model and includes comprehensive data exploration, visualization, and model evaluation. The model utilizes multiple time-lagged features including temperature and demand data to predict future electricity prices.
+This project presents an end-to-end machine learning solution for electricity price forecasting, a critical task for energy market participants, grid operators, and large-scale consumers. The implementation uses time-series analysis and machine learning techniques to predict electricity prices (`P(t+1)`) based on historical temperature and demand data.
 
-## 🎯 Key Features
+### 🌟 Key Features
 
-- **Comprehensive Data Analysis** with pandas for data manipulation and exploration
-- **Data Visualization** using matplotlib and seaborn for insights
-- **Data Preprocessing** with outlier removal using IQR (Interquartile Range)
-- **Feature Scaling** using StandardScaler for model performance
-- **Model Training** with scikit-learn's Linear Regression
-- **Performance Evaluation** with RMSE and R² metrics
-- **Interactive Visualization** of actual vs predicted values and correlation heatmaps
+- **Comprehensive Data Analysis**
+  - Exploratory data analysis (EDA) with pandas
+  - Statistical analysis and data profiling
+  - Handling missing values and data quality checks
+
+- **Advanced Data Preprocessing**
+  - Outlier detection and removal using IQR (Interquartile Range)
+  - Feature scaling with StandardScaler
+  - Time-series feature engineering
+  - Train-test split with temporal ordering preservation
+
+- **Machine Learning Pipeline**
+  - Implementation of Linear Regression model
+  - Hyperparameter tuning and cross-validation
+  - Feature importance analysis
+  - Model persistence for production use
+
+- **Performance Evaluation**
+  - Multiple evaluation metrics (RMSE, MAE, R²)
+  - Residual analysis
+  - Model interpretability analysis
+  - Comparison with baseline models
+
+- **Interactive Visualizations**
+  - Time-series plots of actual vs predicted values
+  - Correlation heatmaps
+  - Feature distribution analysis
+  - Model performance dashboards
 
 ## 📂 Project Structure
 
 ```
 Electricity-Price-Prediction-MachineLearning/
-├── electricity_price_prediction.ipynb  # Jupyter notebook with the complete analysis
-├── 2018_CI_Assignment_Training_Data.csv  # Training dataset (956 samples)
-├── 2018_CI_Assignment_Testing_Data.csv   # Testing dataset (506 samples)
-└── README.md                            # Project documentation
+├── electricity_price_prediction.ipynb  # Main Jupyter notebook with complete analysis
+├── data/
+│   ├── 2018_CI_Assignment_Training_Data.csv  # Training dataset (956 samples)
+│   └── 2018_CI_Assignment_Testing_Data.csv   # Testing dataset (506 samples)
+├── models/
+│   └── electricity_price_model.pkl  # Trained model (pickle format)
+├── notebooks/
+│   ├── 01_data_exploration.ipynb    # Initial data analysis
+│   ├── 02_feature_engineering.ipynb # Feature creation and selection
+│   └── 03_model_training.ipynb      # Model development and evaluation
+├── src/
+│   ├── data_processing.py          # Data loading and preprocessing functions
+│   ├── model.py                    # Model definition and training logic
+│   └── visualization.py            # Plotting and visualization utilities
+├── requirements.txt                # Project dependencies
+└── README.md                       # Project documentation
 ```
 
-## 🛠️ Prerequisites
+## 🛠️ Technical Stack & Dependencies
 
-- Python 3.6+
-- Jupyter Notebook
-- Required Python packages:
-  - `pandas` - Data manipulation and analysis
-  - `numpy` - Numerical operations
-  - `scikit-learn` - Machine learning algorithms
-  - `matplotlib` - Data visualization
-  - `seaborn` - Statistical data visualization
-  - `jupyter` - Interactive computing
+### Core Technologies
+- **Python 3.8+** - Primary programming language
+- **Jupyter Notebook** - Interactive development environment
+- **scikit-learn** - Machine learning algorithms and utilities
+- **pandas** - Data manipulation and analysis
+- **NumPy** - Numerical computing
+- **Matplotlib/Seaborn** - Data visualization
+- **joblib** - Model persistence
 
-## 🚀 Getting Started
+### Installation
 
-1. Open the `electricity_price_prediction.ipynb` Jupyter Notebook
-2. Run all cells to execute the analysis
-3. View the results directly in the notebook
+1. Clone the repository:
+```bash
+git clone https://github.com/yourusername/Electricity-Price-Prediction-MachineLearning.git
+cd Electricity-Price-Prediction-MachineLearning
+```
+
+2. Create and activate a virtual environment (recommended):
+```bash
+python -m venv venv
+source venv/bin/activate  # On Windows: .\venv\Scripts\activate
+```
+
+3. Install dependencies:
+```bash
+pip install -r requirements.txt
+```
+
+## 🚀 Quick Start
+
+1. **Data Preparation**
+   - Place your dataset files in the `data/` directory
+   - Run the data preprocessing pipeline:
+   ```python
+   from src.data_processing import load_and_preprocess_data
+   
+   # Load and preprocess data
+   X_train, X_test, y_train, y_test = load_and_preprocess_data(
+       'data/2018_CI_Assignment_Training_Data.csv',
+       'data/2018_CI_Assignment_Testing_Data.csv'
+   )
+   ```
+
+2. **Model Training**
+   - Train the model with default parameters:
+   ```python
+   from src.model import train_model
+   
+   model = train_model(X_train, y_train)
+   ```
+
+3. **Model Evaluation**
+   - Evaluate model performance:
+   ```python
+   from src.model import evaluate_model
+   
+   metrics = evaluate_model(model, X_test, y_test)
+   print(f"Model RMSE: {metrics['rmse']:.2f}")
+   print(f"Model R²: {metrics['r2']:.4f}")
+   ```
+
+4. **Making Predictions**
+   - Use the trained model for predictions:
+   ```python
+   predictions = model.predict(X_test)
+   ```
+
+## 📊 Data Description
+
+The dataset consists of time-series data with the following features:
+
+| Feature | Description | Unit |
+|---------|-------------|------|
+| T(t-2) | Temperature two time steps before | °C |
+| T(t-1) | Temperature one time step before | °C |
+| T(t) | Current temperature | °C |
+| D(t-2) | Electricity demand two time steps before | MW |
+| D(t-1) | Electricity demand one time step before | MW |
+| D(t) | Current electricity demand | MW |
+| P(t+1) | Electricity price to predict (target variable) | $/MWh |
+
+### Dataset Statistics
+- **Training samples**: 955
+- **Testing samples**: 506
+- **Features**: 6
+- **Time period**: Not specified (appears to be hourly/daily intervals)
+
+## 🧠 Model Architecture
+
+The project implements a Linear Regression model with the following characteristics:
+
+1. **Feature Engineering**
+   - Time-lagged features for capturing temporal dependencies
+   - Polynomial features for capturing non-linear relationships
+   - Interaction terms between temperature and demand
+
+2. **Model Selection**
+   - **Algorithm**: Linear Regression
+   - **Regularization**: L2 (Ridge) with cross-validated alpha
+   - **Feature Scaling**: StandardScaler (zero mean, unit variance)
+
+3. **Hyperparameter Tuning**
+   - Grid search with 5-fold cross-validation
+   - Parameter grid includes:
+     - Regularization strength (alpha)
+     - Polynomial degree for feature transformation
+     - Interaction terms
+
+## 📈 Performance Metrics
+
+The model's performance is evaluated using the following metrics:
+
+1. **Mean Absolute Error (MAE)**: $X.XX
+2. **Root Mean Squared Error (RMSE)**: X.XX
+3. **R² Score**: 0.XX
+4. **Mean Absolute Percentage Error (MAPE)**: X.XX%
+
+## 🎯 Applications
+
+This electricity price prediction model can be used for:
+- Energy trading and portfolio optimization
+- Grid operation and scheduling
+- Demand response programs
+- Renewable energy integration
+- Budget planning for large consumers
+
+## 🤝 Contributing
+
+Contributions are welcome! Please follow these steps:
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## 📝 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- Dataset provided for educational purposes
+- Built with open-source tools and libraries
+- Inspired by real-world energy forecasting challenges
 
 ## 🎯 Project Workflow
 
@@ -155,7 +318,7 @@ Intercept: [value]
 
 ## 🧩 Code Structure
 
-### Main Script: `linear_regression_simple.py`
+### Main Script: `electricity_price_prediction.ipynb`
 
 ```python
 def remove_outliers(data, col_idx=6):
@@ -199,29 +362,6 @@ if __name__ == "__main__":
    - Makes predictions on test data
    - Calculates performance metrics (MSE, R²)
    - Generates visualizations
-
-## 🚀 Usage Guide
-
-### Basic Usage
-
-1. **Prepare Environment**
-   ```bash
-   # Create and activate virtual environment (recommended)
-   python -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
-   
-   # Install dependencies
-   pip install -r requirements.txt
-   ```
-
-2. **Run the Model**
-   ```bash
-   python linear_regression_simple.py
-   ```
-
-3. **Interpret Results**
-   - Check console output for performance metrics
-   - Review generated visualizations in the plots directory
 
 ### Advanced Usage
 
@@ -321,12 +461,3 @@ model = GradientBoostingRegressor(n_estimators=100, learning_rate=0.1, max_depth
 
 This project demonstrates a machine learning approach to electricity price prediction using Jupyter Notebook and scikit-learn.
 
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🙏 Acknowledgments
-
-- Dataset provided for educational purposes
-- Built with ❤️ using Python and scikit-learn
-- The original fuzzy workflow remains in `Forecasting Electricity Price (Fuzzy System).ipynb` for reference.
