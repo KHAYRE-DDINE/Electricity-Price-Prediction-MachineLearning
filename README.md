@@ -14,23 +14,27 @@ This project presents an end-to-end machine learning solution for electricity pr
 ### 🌟 Key Features
 
 - **Comprehensive Data Analysis**
+
   - Exploratory data analysis (EDA) with pandas
   - Statistical analysis and data profiling
   - Handling missing values and data quality checks
 
 - **Advanced Data Preprocessing**
+
   - Outlier detection and removal using IQR (Interquartile Range)
   - Feature scaling with StandardScaler
   - Time-series feature engineering
   - Train-test split with temporal ordering preservation
 
 - **Machine Learning Pipeline**
+
   - Implementation of Linear Regression model
   - Hyperparameter tuning and cross-validation
   - Feature importance analysis
   - Model persistence for production use
 
 - **Performance Evaluation**
+
   - Multiple evaluation metrics (RMSE, MAE, R²)
   - Residual analysis
   - Model interpretability analysis
@@ -67,6 +71,7 @@ Electricity-Price-Prediction-MachineLearning/
 ## 🛠️ Technical Stack & Dependencies
 
 ### Core Technologies
+
 - **Python 3.8+** - Primary programming language
 - **Jupyter Notebook** - Interactive development environment
 - **scikit-learn** - Machine learning algorithms and utilities
@@ -78,18 +83,21 @@ Electricity-Price-Prediction-MachineLearning/
 ### Installation
 
 1. Clone the repository:
+
 ```bash
 git clone https://github.com/yourusername/Electricity-Price-Prediction-MachineLearning.git
 cd Electricity-Price-Prediction-MachineLearning
 ```
 
 2. Create and activate a virtual environment (recommended):
+
 ```bash
 python -m venv venv
 source venv/bin/activate  # On Windows: .\venv\Scripts\activate
 ```
 
 3. Install dependencies:
+
 ```bash
 pip install -r requirements.txt
 ```
@@ -97,11 +105,13 @@ pip install -r requirements.txt
 ## 🚀 Quick Start
 
 1. **Data Preparation**
+
    - Place your dataset files in the `data/` directory
    - Run the data preprocessing pipeline:
+
    ```python
    from src.data_processing import load_and_preprocess_data
-   
+
    # Load and preprocess data
    X_train, X_test, y_train, y_test = load_and_preprocess_data(
        'data/2018_CI_Assignment_Training_Data.csv',
@@ -110,18 +120,22 @@ pip install -r requirements.txt
    ```
 
 2. **Model Training**
+
    - Train the model with default parameters:
+
    ```python
    from src.model import train_model
-   
+
    model = train_model(X_train, y_train)
    ```
 
 3. **Model Evaluation**
+
    - Evaluate model performance:
+
    ```python
    from src.model import evaluate_model
-   
+
    metrics = evaluate_model(model, X_test, y_test)
    print(f"Model RMSE: {metrics['rmse']:.2f}")
    print(f"Model R²: {metrics['r2']:.4f}")
@@ -137,17 +151,18 @@ pip install -r requirements.txt
 
 The dataset consists of time-series data with the following features:
 
-| Feature | Description | Unit |
-|---------|-------------|------|
-| T(t-2) | Temperature two time steps before | °C |
-| T(t-1) | Temperature one time step before | °C |
-| T(t) | Current temperature | °C |
-| D(t-2) | Electricity demand two time steps before | MW |
-| D(t-1) | Electricity demand one time step before | MW |
-| D(t) | Current electricity demand | MW |
-| P(t+1) | Electricity price to predict (target variable) | $/MWh |
+| Feature | Description                                    | Unit  |
+| ------- | ---------------------------------------------- | ----- |
+| T(t-2)  | Temperature two time steps before              | °C    |
+| T(t-1)  | Temperature one time step before               | °C    |
+| T(t)    | Current temperature                            | °C    |
+| D(t-2)  | Electricity demand two time steps before       | MW    |
+| D(t-1)  | Electricity demand one time step before        | MW    |
+| D(t)    | Current electricity demand                     | MW    |
+| P(t+1)  | Electricity price to predict (target variable) | $/MWh |
 
 ### Dataset Statistics
+
 - **Training samples**: 955
 - **Testing samples**: 506
 - **Features**: 6
@@ -155,24 +170,32 @@ The dataset consists of time-series data with the following features:
 
 ## 🧠 Model Architecture
 
-The project implements a Linear Regression model with the following characteristics:
+The project implements a Linear Regression model. Here are the specific details of the implementation:
 
-1. **Feature Engineering**
-   - Time-lagged features for capturing temporal dependencies
-   - Polynomial features for capturing non-linear relationships
-   - Interaction terms between temperature and demand
+1. **The Algorithm**
 
-2. **Model Selection**
-   - **Algorithm**: Linear Regression
-   - **Regularization**: L2 (Ridge) with cross-validated alpha
-   - **Feature Scaling**: StandardScaler (zero mean, unit variance)
+   - **Model**: `LinearRegression` from the scikit-learn library.
+   - **Type**: Supervised Learning regression algorithm.
+   - **Goal**: Fits a linear equation to the observed data to predict the numerical value of the electricity price.
 
-3. **Hyperparameter Tuning**
-   - Grid search with 5-fold cross-validation
-   - Parameter grid includes:
-     - Regularization strength (alpha)
-     - Polynomial degree for feature transformation
-     - Interaction terms
+2. **Why this method?**
+
+   - **Baseline**: Linear Regression is often used as a first-step "baseline" model to establish a benchmark for performance.
+   - **Interpretability**: It is easy to understand how each feature (like Temperature or Demand) affects the final Price (positive or negative correlation).
+   - **Speed**: It is computationally very fast to train compared to complex models like Neural Networks.
+
+3. **Key Techniques Used with the Model**
+   To make the Linear Regression work better, the code applies these preprocessing techniques:
+
+   - **Feature Scaling**: Uses `StandardScaler` to normalize the data (making mean=0 and variance=1). This is crucial for Linear Regression to prevent features with large numbers (like Demand ~5000) from dominating features with small numbers (like Temperature ~25).
+   - **Outlier Removal**: Uses the **IQR (Interquartile Range)** method to remove extreme data points that could skew the regression line.
+
+4. **Input & Output**
+   - **Input Features ($X$)**:
+     - Temperature at times $t$, $t-1$, $t-2$.
+     - Demand (Load) at times $t$, $t-1$, $t-2$.
+   - **Target Output ($y$)**:
+     - Electricity Price at time $t+1$.
 
 ## 📈 Performance Metrics
 
@@ -186,6 +209,7 @@ The model's performance is evaluated using the following metrics:
 ## 🎯 Applications
 
 This electricity price prediction model can be used for:
+
 - Energy trading and portfolio optimization
 - Grid operation and scheduling
 - Demand response programs
@@ -195,6 +219,7 @@ This electricity price prediction model can be used for:
 ## 🤝 Contributing
 
 Contributions are welcome! Please follow these steps:
+
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/amazing-feature`)
 3. Commit your changes (`git commit -m 'Add some amazing feature'`)
@@ -216,20 +241,24 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 The notebook follows a structured data science workflow:
 
 1. **Data Loading & Initial Exploration**
+
    - Loads training and testing datasets
    - Displays basic statistics and data structure
 
 2. **Data Visualization**
+
    - Price distribution analysis
    - Correlation heatmap of all features
    - Outlier detection and handling
 
 3. **Data Preprocessing**
+
    - Outlier removal using IQR method
    - Feature scaling with StandardScaler
    - Train-test split
 
 4. **Model Training**
+
    - Linear Regression model implementation
    - Training on preprocessed data
 
@@ -241,6 +270,7 @@ The notebook follows a structured data science workflow:
 ### Features Used
 
 The model uses the following features for prediction:
+
 - Temperature at different time lags (T(t-2), T(t-1), T(t))
 - Demand at different time lags (D(t-2), D(t-1), D(t))
 - Target variable: Next time period's price (P(t+1))
@@ -249,10 +279,10 @@ The model uses the following features for prediction:
 
 The current model achieves the following performance metrics:
 
-| Metric  | Training Set | Test Set |
-|---------|-------------|----------|
-| RMSE    | 6.20        | 20.15    |
-| R²      | 0.3951      | 0.1242   |
+| Metric | Training Set | Test Set |
+| ------ | ------------ | -------- |
+| RMSE   | 6.20         | 20.15    |
+| R²     | 0.3951       | 0.1242   |
 
 ### Key Findings
 
@@ -263,11 +293,13 @@ The current model achieves the following performance metrics:
 ## 🚀 Next Steps
 
 1. **Model Improvement**
+
    - Try more complex models (Random Forest, XGBoost, etc.)
    - Feature engineering to capture more complex patterns
    - Hyperparameter tuning
 
 2. **Feature Engineering**
+
    - Create additional time-based features
    - Consider external factors affecting electricity prices
    - Handle seasonality and trends
@@ -276,16 +308,18 @@ The current model achieves the following performance metrics:
    - Convert notebook to a deployable application
    - Create an API endpoint for predictions
    - Set up automated model retraining
-  - Fast training and prediction
-  - Easy to interpret coefficients
-  - Low computational requirements
-  - Serves as an excellent baseline model
+
+- Fast training and prediction
+- Easy to interpret coefficients
+- Low computational requirements
+- Serves as an excellent baseline model
 
 ### Evaluation Metrics
 
 Model performance is assessed using:
 
 1. **Mean Squared Error (MSE)**:
+
    - Measures the average squared difference between actual and predicted values
    - Lower values indicate better performance
 
@@ -296,7 +330,9 @@ Model performance is assessed using:
 ## 📊 Results Interpretation
 
 ### Performance Metrics
+
 After running the model, you'll see output similar to:
+
 ```
 Model Performance:
 Mean Squared Error: [value]
@@ -308,6 +344,7 @@ Intercept: [value]
 ### Visualization
 
 1. **Actual vs Predicted Scatter Plot**:
+
    - Displays the relationship between actual and predicted prices
    - The red dashed line indicates perfect predictions
    - Points closer to the line indicate better model performance
@@ -342,19 +379,23 @@ if __name__ == "__main__":
 ### Key Components:
 
 1. **Data Loading & Preparation**
+
    - Loads training and testing datasets from CSV files
    - Converts data to numpy arrays for processing
    - Handles missing values if any
 
 2. **Outlier Removal**
+
    - Implements IQR (Interquartile Range) method
-   - Removes data points outside 1.5 * IQR from the quartiles
+   - Removes data points outside 1.5 \* IQR from the quartiles
 
 3. **Feature Engineering**
+
    - Selects relevant features based on correlation analysis
    - Prepares input-output pairs for the model
 
 4. **Model Training**
+
    - Initializes and trains a linear regression model
    - Fits the model on training data
 
@@ -366,18 +407,24 @@ if __name__ == "__main__":
 ### Advanced Usage
 
 #### Customizing Input Data
+
 Place your training and testing data in the project root directory with filenames:
+
 - `2018_CI_Assignment_Training_Data.csv`
 - `2018_CI_Assignment_Testing_Data.csv`
 
 #### Modifying Model Parameters
+
 Edit `linear_regression_simple.py` to:
+
 - Adjust IQR multiplier for outlier detection (default: 1.5)
 - Change visualization parameters (figure size, colors, etc.)
 - Modify model hyperparameters
 
 #### Extending the Model
+
 1. **Add New Features**:
+
    - Modify the feature selection section to include additional variables
    - Update the data loading and preprocessing steps accordingly
 
@@ -388,6 +435,7 @@ Edit `linear_regression_simple.py` to:
 ## 📈 Model Performance
 
 ### Expected Output
+
 After running the model, you should see output similar to:
 
 ```
@@ -399,6 +447,7 @@ Intercept: [value]
 ```
 
 ### Interpretation
+
 - **MSE**: Lower values indicate better performance
 - **R² Score**: Closer to 1 indicates better fit
 - **Coefficients**: Show the weight/importance of each feature
@@ -407,6 +456,7 @@ Intercept: [value]
 ## 🚀 Extending the Project
 
 ### Alternative Models
+
 Consider trying these scikit-learn regressors for potentially better performance:
 
 ```python
@@ -426,11 +476,13 @@ model = GradientBoostingRegressor(n_estimators=100, learning_rate=0.1, max_depth
 ### Feature Engineering Ideas
 
 1. **Temporal Features**
+
    - Rolling averages of temperature and demand
    - Lagged features (t-1, t-2, etc.)
    - Moving statistics (mean, std, min, max)
 
 2. **Seasonal Indicators**
+
    - Hour of day
    - Day of week
    - Month of year
@@ -444,10 +496,12 @@ model = GradientBoostingRegressor(n_estimators=100, learning_rate=0.1, max_depth
 ## ⚠️ Limitations
 
 1. **Model Complexity**
+
    - Linear models may not capture complex non-linear relationships
    - Limited feature interactions by default
 
 2. **Data Assumptions**
+
    - Assumes stationarity in price relationships
    - Simple outlier removal might not be optimal for all cases
    - Limited to the provided feature set
@@ -460,4 +514,3 @@ model = GradientBoostingRegressor(n_estimators=100, learning_rate=0.1, max_depth
 ## 🤝 About
 
 This project demonstrates a machine learning approach to electricity price prediction using Jupyter Notebook and scikit-learn.
-

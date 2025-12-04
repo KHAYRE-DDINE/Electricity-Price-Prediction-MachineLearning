@@ -166,3 +166,36 @@ print(f"Test R² Score: {test_r2:.4f}")
 - `np.sqrt(...)`: Takes the square root of the MSE to get the Root Mean Squared Error (RMSE), which is in the same units as the target variable (Price).
 - `r2_score(...)`: Calculates the R-squared score, representing the proportion of variance in the dependent variable explained by the model.
 - `print(...)`: Outputs the calculated metrics to assess how well the model performed.
+
+## 9. Methodology Details
+
+Based on the code and documentation in your project, the Machine Learning method used is **Linear Regression**.
+
+Here are the specific details of the implementation:
+
+### 1. The Algorithm
+
+- **Model:** `LinearRegression` from the **scikit-learn** library.
+- **Type:** It is a **Supervised Learning** regression algorithm.
+- **Goal:** It fits a linear equation to the observed data to predict the numerical value of the electricity price.
+
+### 2. Why this method?
+
+- **Baseline:** Linear Regression is often used as a first-step "baseline" model to establish a benchmark for performance.
+- **Interpretability:** It is easy to understand how each feature (like Temperature or Demand) affects the final Price (positive or negative correlation).
+- **Speed:** It is computationally very fast to train compared to complex models like Neural Networks.
+
+### 3. Key Techniques Used with the Model
+
+To make the Linear Regression work better, the code applies these preprocessing techniques:
+
+- **Feature Scaling:** Uses `StandardScaler` to normalize the data (making mean=0 and variance=1). This is crucial for Linear Regression to prevent features with large numbers (like Demand ~5000) from dominating features with small numbers (like Temperature ~25).
+- **Outlier Removal:** Uses the **IQR (Interquartile Range)** method to remove extreme data points that could skew the regression line.
+
+### 4. Input & Output
+
+- **Input Features ($X$):**
+  - Temperature at times $t$, $t-1$, $t-2$.
+  - Demand (Load) at times $t$, $t-1$, $t-2$.
+- **Target Output ($y$):**
+  - Electricity Price at time $t+1$.
